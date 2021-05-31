@@ -1,41 +1,47 @@
 
-from numpy import *
+from math import log
+from numpy import * 
 from matplotlib import pyplot as plt
 
+class Biseccion:
+    def __init__(self, f, a, b, tol, imax = 50):
+        self.a = a
+        self.b = b
+        self.tol = tol
+        self.Fs = str(f).replace("**", "^").replace("*", "")
+        self.f = lambda x: eval(f)
+        self.imax = imax
+        pass
+
+    def Calculo(self):
+        a = self.a
+        b = self.b
+        r = a
+        r1 = b
+        error = 1
+        i = 0
+        while ((i < self.imax) and (error >= self.tol)):
+            
+            r1 = r
+            r = (a+b)/2
+            fa = self.f(a)
+            fb = self.f(b)
+            fr = self.f(r)
+
+            print ('*{:0>2d}'.format(i),'* {:.3f}'.format(a), '* {:.3f}'.format(b), '* {:.3f}'.format(fa), '* {:.3f}'.format(fb), '* {:.3f}'.format(r), '* {:.3f}'.format(fr), '*  {:.3f}'.format(error),' *')
+            if (self.f(a)*self.f(r) < 0):
+                b = r
+            else:
+                a = r
+            i = i + 1
+            error = abs ((r1-r)/r)
+        return r
+
+        
 
 def ln(x):
     return log(x)
 
-def biseccion(f, a, b, tol, imax=50):
-    print('Metodo de biseccion: ')
-    print ('********************************************************************')
-    print ('* i *   a    *   b    *  f(a)  *  f(b) *   ri   * f(ri) *   error  *')
-
-    i = 0
-    r = a
-    r1 = b
-    error = 1
-
-    while ((i < imax) and (error >= tol)):
-            
-        r1 = r
-        r = (a+b)/2
-        fa = f(a)
-        fb = f(b)
-        fr = f(r)
-
-        print ('*{:0>2d}'.format(i),'* {:.3f}'.format(a), '* {:.3f}'.format(b), '* {:.3f}'.format(fa), '* {:.3f}'.format(fb), '* {:.3f}'.format(r), '* {:.3f}'.format(fr), '*  {:.3f}'.format(error),' *')
-        if (f(a)*f(r) < 0):
-            b = r
-        else:
-            a = r
-        i = i + 1
-        error = abs ((r1-r)/r)
-    ('Metodo de biseccion: ')
-    print ('********************************************************************')
-    print ("r",i, " = {:.6f}".format(r),"es una buena aproximacion, con un error de",error)
-    print(' ')
-    return r
 
 def regla_falsa(f, a, b, tol, imax=50):
     print('Metodo de biseccion: ')
